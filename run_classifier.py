@@ -192,6 +192,31 @@ class DataProcessor(object):
       return lines
 
 
+class SSTProcessor(DataProcessor):
+
+  def __init__(self):
+    self.data_file = "datasetSentences.txt"
+    self.split_file = "datasetSplit.txt"
+    self.label_file = "sentiment_labels.txt"
+
+  def get_train_examples(self, data_dir):
+    """See base class."""
+    return self._create_examples(
+        self._read_tsv(os.path.join(data_dir, self.data_file)), "train")
+
+  def get_dev_examples(self, data_dir):
+    """See base class."""
+    raise NotImplementedError()
+
+  def get_test_examples(self, data_dir):
+    """See base class."""
+    raise NotImplementedError()
+
+  def get_labels(self):
+    """See base class."""
+    raise NotImplementedError()
+
+
 class GLUEProcessor(DataProcessor):
   def __init__(self):
     self.train_file = "train.tsv"
