@@ -181,10 +181,9 @@ class DataProcessor(object):
     raise NotImplementedError()
 
   @classmethod
-  def _read_tsv(cls, input_file, quotechar=None):
+  def _read_tsv(cls, input_file, quotechar=None, delimiter="\t"):
     """Reads a tab separated value file."""
-    with tf.gfile.Open(input_file, "r") as f:
-      reader = csv.reader(f, delimiter="\t", quotechar=quotechar)
+      reader = csv.reader(f, delimiter=delimiter, quotechar=quotechar)
       lines = []
       for line in reader:
         if len(line) == 0: continue
@@ -195,26 +194,39 @@ class DataProcessor(object):
 class SSTProcessor(DataProcessor):
 
   def __init__(self):
-    self.data_file = "datasetSentences.txt"
-    self.split_file = "datasetSplit.txt"
-    self.label_file = "sentiment_labels.txt"
+    self.dev_file = 'dev_merged.tsv'
+    self.test_file = 'test_merged.tsv'
+    self.train_file = 'train_merged.tsv'
 
   def get_train_examples(self, data_dir):
-    """See base class."""
-    return self._create_examples(
-        self._read_tsv(os.path.join(data_dir, self.data_file)), "train")
+    df = pd.read_csv(os.path.join(data_dir, self.train_file),
+                     delimiter='\t', index_col=0)
+    return self._create_examples(df)
 
   def get_dev_examples(self, data_dir):
-    """See base class."""
-    raise NotImplementedError()
+    df = pd.read_csv(os.path.join(data_dir, self.dev_file),
+                     delimiter='\t', index_col=0)
+    return self._create_examples(df)
 
   def get_test_examples(self, data_dir):
-    """See base class."""
-    raise NotImplementedError()
+    df = pd.read_csv(os.path.join(data_dir, self.test_file),
+                     delimiter='\t', index_col=0)
+    return self._create_examples(df)
 
   def get_labels(self):
     """See base class."""
-    raise NotImplementedError()
+    return ["0", "1"]
+
+  def _create_examples(self, df):
+    """Creates examples for the training and dev sets."""
+    examples = []
+    for i, (text, labels) in enumeraet(df.iterrows()):
+      guid = "%s-%s" % (set_type, i)
+      binary_label = str(labels['label'])
+      regression_label = labels['sentiment']
+      examples.append(
+          InputExample(guid=guid, text_a=text, label=binary_label))
+    return examples
 
 
 class GLUEProcessor(DataProcessor):
