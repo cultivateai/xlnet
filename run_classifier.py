@@ -307,6 +307,30 @@ class GLUEProcessor(DataProcessor):
     return examples
 
 
+class Yelp2Processor(DataProcessor):
+  def get_train_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "train.csv"))
+
+  def get_dev_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "test.csv"))
+
+  def get_labels(self):
+    """See base class."""
+    return ["1", "2"]
+
+  def _create_examples(self, input_file):
+    """Creates examples for the training and dev sets."""
+    examples = []
+    with tf.gfile.Open(input_file) as f:
+      reader = csv.reader(f)
+      for i, line in enumerate(reader):
+        label = line[0]
+        text_a = line[1].replace('""', '"').replace('\\"', '"')
+        examples.append(
+            InputExample(guid=str(i), text_a=text_a, text_b=None, label=label))
+    return examples
+
+
 class Yelp5Processor(DataProcessor):
   def get_train_examples(self, data_dir):
     return self._create_examples(os.path.join(data_dir, "train.csv"))
@@ -687,7 +711,11 @@ def main(_):
       "mnli_mismatched": MnliMismatchedProcessor,
       'sts-b': StsbProcessor,
       'imdb': ImdbProcessor,
-      "yelp5": Yelp5Processor
+      "yelp5": Yelp5Processor,
+      "yelp2": Yelp2Processor,
+      "amazon5": Yelp5Processor,
+      "amazon2": Amazon2Processor,
+      "sst": SSTProcessor
   }
 
   if not FLAGS.do_train and not FLAGS.do_eval and not FLAGS.do_predict:
