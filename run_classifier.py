@@ -714,7 +714,7 @@ def main(_):
       "yelp5": Yelp5Processor,
       "yelp2": Yelp2Processor,
       "amazon5": Yelp5Processor,
-      "amazon2": Amazon2Processor,
+      "amazon2": Yelp2Processor,
       "sst": SSTProcessor
   }
 
