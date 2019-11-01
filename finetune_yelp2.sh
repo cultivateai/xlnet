@@ -1,7 +1,7 @@
 #!/bin/bash
 export GS_ROOT='gs://sentiment-datasets'
 export LARGE_DIR='xlnet_cased_L-24_H-1024_A-16'
-export YELP_DIR='/home/andyhorng/xlnet/yelp_dataset/yelp_review_polarity_csv/'
+export YELP_DIR='/home/andyhorng/xlnet/yelp_dataset/yelp_review_polarity_csv'
 export TPU_NAME='sentiment'
 python run_classifier.py \
   --use_tpu=True \
