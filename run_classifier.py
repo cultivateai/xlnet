@@ -187,7 +187,7 @@ class DataProcessor(object):
     lines = []
     for line in reader:
       if len(line) == 0: continue
-        lines.append(line)
+      lines.append(line)
     return lines
 
 
