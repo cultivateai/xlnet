@@ -183,12 +183,12 @@ class DataProcessor(object):
   @classmethod
   def _read_tsv(cls, input_file, quotechar=None, delimiter="\t"):
     """Reads a tab separated value file."""
-      reader = csv.reader(f, delimiter=delimiter, quotechar=quotechar)
-      lines = []
-      for line in reader:
-        if len(line) == 0: continue
+    reader = csv.reader(f, delimiter=delimiter, quotechar=quotechar)
+    lines = []
+    for line in reader:
+      if len(line) == 0: continue
         lines.append(line)
-      return lines
+    return lines
 
 
 class SSTProcessor(DataProcessor):
@@ -225,7 +225,7 @@ class SSTProcessor(DataProcessor):
       binary_label = str(labels['label'])
       regression_label = labels['sentiment']
       examples.append(
-          InputExample(guid=guid, text_a=text, label=binary_label))
+        InputExample(guid=guid, text_a=text, label=binary_label))
     return examples
 
 
@@ -327,7 +327,7 @@ class Yelp2Processor(DataProcessor):
         label = line[0]
         text_a = line[1].replace('""', '"').replace('\\"', '"')
         examples.append(
-            InputExample(guid=str(i), text_a=text_a, text_b=None, label=label))
+          InputExample(guid=str(i), text_a=text_a, text_b=None, label=label))
     return examples
 
 
@@ -352,7 +352,7 @@ class Yelp5Processor(DataProcessor):
         label = line[0]
         text_a = line[1].replace('""', '"').replace('\\"', '"')
         examples.append(
-            InputExample(guid=str(i), text_a=text_a, text_b=None, label=label))
+          InputExample(guid=str(i), text_a=text_a, text_b=None, label=label))
     return examples
 
 
