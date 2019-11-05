@@ -222,7 +222,7 @@ class SST2Processor(DataProcessor):
     examples = []
     for i, (text, labels) in enumerate(df.iterrows()):
       guid = "%s-%s" % (set_type, i)
-      binary_label = str(labels['label'])
+      binary_label = str(int(labels['label']))
       regression_label = labels['sentiment']
       examples.append(
         InputExample(guid=guid, text_a=text, label=binary_label))
