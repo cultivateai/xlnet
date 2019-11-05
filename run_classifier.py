@@ -201,23 +201,23 @@ class SST2Processor(DataProcessor):
   def get_train_examples(self, data_dir):
     df = pd.read_csv(os.path.join(data_dir, self.train_file),
                      delimiter='\t', index_col=0)
-    return self._create_examples(df)
+    return self._create_examples(df, 'train')
 
   def get_dev_examples(self, data_dir):
     df = pd.read_csv(os.path.join(data_dir, self.dev_file),
                      delimiter='\t', index_col=0)
-    return self._create_examples(df)
+    return self._create_examples(df, 'dev')
 
   def get_test_examples(self, data_dir):
     df = pd.read_csv(os.path.join(data_dir, self.test_file),
                      delimiter='\t', index_col=0)
-    return self._create_examples(df)
+    return self._create_examples(df, 'test')
 
   def get_labels(self):
     """See base class."""
     return ["0", "1"]
 
-  def _create_examples(self, df):
+  def _create_examples(self, df, set_type):
     """Creates examples for the training and dev sets."""
     examples = []
     for i, (text, labels) in enumerate(df.iterrows()):
