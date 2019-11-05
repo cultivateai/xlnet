@@ -36,7 +36,7 @@ python run_classifier.py \
 # git clone https://github.com/cultivateai/xlnet.git
 # gsutil -m cp -r gs://sentiment-datasets/SST-2 ./
 # gsutil -m cp -r gs://sentiment-datasets/xlnet_cased_L-24_H-1024_A-16 ./
-# sudo pip install sentencepiece
+# sudo pip install sentencepiece pandas
 
 
 # to view tensorboard (run in cloud shell)

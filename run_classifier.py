@@ -220,7 +220,7 @@ class SST2Processor(DataProcessor):
   def _create_examples(self, df):
     """Creates examples for the training and dev sets."""
     examples = []
-    for i, (text, labels) in enumeraet(df.iterrows()):
+    for i, (text, labels) in enumerate(df.iterrows()):
       guid = "%s-%s" % (set_type, i)
       binary_label = str(labels['label'])
       regression_label = labels['sentiment']
