@@ -29,8 +29,9 @@ python run_classifier.py \
   --iterations=500
 
 # ${GS_ROOT}/${LARGE_DIR}/xlnet_model.ckpt
-# ${GS_ROOT}/exp/yelp/checkpoint_10_31_2019/model.ckpt-8000
 # ${GS_ROOT}/exp/yelp/checkpoint_10_30_2019/model.ckpt-4000
+# ${GS_ROOT}/exp/yelp/checkpoint_10_31_2019/model.ckpt-8000
+
 # Expected Performance: Error rate 27.80 (yelp5), 1.55 (yelp2)
 
 

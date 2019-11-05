@@ -16,19 +16,20 @@ python run_classifier.py \
   --uncased=False \
   --spiece_model_file=${LARGE_DIR}/spiece.model \
   --model_config_path=${GS_ROOT}/${LARGE_DIR}/xlnet_config.json \
-  --init_checkpoint=${GS_ROOT}/${LARGE_DIR}/xlnet_model.ckpt \
+  --init_checkpoint=${GS_ROOT}/exp/yelp2/checkpoint_11_04_2019/model.ckpt-7000 \
   --max_seq_length=512 \
   --train_batch_size=32 \
   --eval_batch_size=8 \
   --num_hosts=1 \
   --num_core_per_host=8 \
-  --learning_rate=2e-5 \
+  --learning_rate=2e-7 \
   --train_steps=8000 \
   --warmup_steps=500 \
   --save_steps=500 \
   --iterations=500
 
-# ${GS_ROOT}/exp/yelp/checkpoint_10_30_2019/model.ckpt-4000
+# ${GS_ROOT}/${LARGE_DIR}/xlnet_model.ckpt
+# ${GS_ROOT}/exp/yelp2/checkpoint_11_04_2019/model.ckpt-7000
 # Expected Performance: Error rate 27.80 (yelp5), 1.55 (yelp2)
 
 

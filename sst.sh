@@ -9,10 +9,10 @@ python run_classifier.py \
   --do_train=True \
   --do_eval=True \
   --eval_all_ckpt=True \
-  --task_name=sst \
+  --task_name=sst2 \
   --data_dir=${SST_DIR} \
-  --output_dir=${GS_ROOT}/proc_data/sst \
-  --model_dir=${GS_ROOT}/exp/sst \
+  --output_dir=${GS_ROOT}/proc_data/sst2 \
+  --model_dir=${GS_ROOT}/exp/sst2 \
   --uncased=False \
   --spiece_model_file=${LARGE_DIR}/spiece.model \
   --model_config_path=${GS_ROOT}/${LARGE_DIR}/xlnet_config.json \
@@ -32,16 +32,15 @@ python run_classifier.py \
 # Performance: Accuracy 95.6
 
 
-# ctpu up --tf-version 1.14.1.dev20190518 --zone=us-central1-b --name=sentiment --tpu-size v3-8
+# ctpu up --tf-version 1.15 --zone=us-central1-b --name=sentiment3 --tpu-size v3-8
 # git clone https://github.com/cultivateai/xlnet.git
-# gsutil -m cp -r gs://sentiment-datasets/yelp_dataset ./
-# gsutil -m cp -r gs://sentiment-datasets/amazon_dataset ./
-# gsutil -m cp -r gs://sentiment-datasets/aclImdb ./
+# gsutil -m cp -r gs://sentiment-datasets/SST-2 ./
 # gsutil -m cp -r gs://sentiment-datasets/xlnet_cased_L-24_H-1024_A-16 ./
+# sudo pip install sentencepiece
 
 
 # to view tensorboard (run in cloud shell)
 export STORAGE_BUCKET=gs://sentiment-datasets
-export MODEL_DIR=${STORAGE_BUCKET}/exp/sst
+export MODEL_DIR=${STORAGE_BUCKET}/exp/sst2
 export TPU_IP=10.240.1.2
 tensorboard --logdir=${MODEL_DIR} --master_tpu_unsecure_channel=${TPU_IP} &

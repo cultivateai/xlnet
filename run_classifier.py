@@ -18,7 +18,7 @@ from collections import defaultdict as dd
 
 import absl.logging as _logging  # pylint: disable=unused-import
 import tensorflow as tf
-
+import pandas as pd
 import sentencepiece as spm
 
 from data_utils import SEP_ID, VOCAB_SIZE, CLS_ID
@@ -191,7 +191,7 @@ class DataProcessor(object):
     return lines
 
 
-class SSTProcessor(DataProcessor):
+class SST2Processor(DataProcessor):
 
   def __init__(self):
     self.dev_file = 'dev_merged.tsv'
@@ -715,7 +715,7 @@ def main(_):
       "yelp2": Yelp2Processor,
       "amazon5": Yelp5Processor,
       "amazon2": Yelp2Processor,
-      "sst": SSTProcessor
+      "sst2": SST2Processor
   }
 
   if not FLAGS.do_train and not FLAGS.do_eval and not FLAGS.do_predict:
