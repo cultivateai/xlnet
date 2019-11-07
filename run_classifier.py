@@ -183,7 +183,9 @@ class DataProcessor(object):
   @classmethod
   def _read_tsv(cls, input_file, quotechar=None, delimiter="\t"):
     """Reads a tab separated value file."""
-    reader = csv.reader(input_file, delimiter=delimiter, quotechar=quotechar)
+    reader = csv.reader(open(input_file, 'r'),
+                        delimiter=delimiter,
+                        quotechar=quotechar)
     lines = []
     for line in reader:
       if len(line) == 0: continue
@@ -217,30 +219,15 @@ class SST2Processor(DataProcessor):
     """See base class."""
     return ["0", "1"]
 
-  def _create_examples(self, df, set_type):
-    """Creates examples for the training and dev sets."""
-    examples = []
-    for i, (text, labels) in enumerate(df.iterrows()):
-      guid = "%s-%s" % (set_type, i)
-      binary_label = str(int(labels['label']))
-      regression_label = labels['sentiment']
-      examples.append(
-        InputExample(guid=guid, text_a=text, label=binary_label))
-    return examples
-
-
   def _create_examples(self, lines, set_type):
     """Creates examples for the training and dev sets."""
     examples = []
     for (i, line) in enumerate(lines):
       if i == 0:
         continue
-      try:
-        text_a = line[0]
-        binary_label = str(int(line[1]))
-        regression_label = float(line[2])
-      except:
-        print(line)
+      text_a = line[0]
+      binary_label = line[1])
+      regression_label = float(line[2])
       guid = "%s-%s" % (set_type, i)
       examples.append(
           InputExample(guid=guid, text_a=text_a, text_b=None, label=binary_label))
