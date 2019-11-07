@@ -226,7 +226,7 @@ class SST2Processor(DataProcessor):
       if i == 0:
         continue
       text_a = line[0]
-      binary_label = line[1])
+      binary_label = line[1]
       regression_label = float(line[2])
       guid = "%s-%s" % (set_type, i)
       examples.append(
