@@ -199,19 +199,19 @@ class SST2Processor(DataProcessor):
     self.train_file = 'train_merged.tsv'
 
   def get_train_examples(self, data_dir):
-    df = pd.read_csv(os.path.join(data_dir, self.train_file),
-                     delimiter='\t', index_col=0)
-    return self._create_examples(df, 'train')
+    """See base class."""
+    return self._create_examples(
+        self._read_tsv(os.path.join(data_dir, self.train_file)), 'train')
 
   def get_dev_examples(self, data_dir):
-    df = pd.read_csv(os.path.join(data_dir, self.dev_file),
-                     delimiter='\t', index_col=0)
-    return self._create_examples(df, 'dev')
+    """See base class."""
+    return self._create_examples(
+        self._read_tsv(os.path.join(data_dir, self.dev_file)), 'dev')
 
   def get_test_examples(self, data_dir):
-    df = pd.read_csv(os.path.join(data_dir, self.test_file),
-                     delimiter='\t', index_col=0)
-    return self._create_examples(df, 'test')
+    """See base class."""
+    return self._create_examples(
+        self._read_tsv(os.path.join(data_dir, self.test_file)), 'test')
 
   def get_labels(self):
     """See base class."""
@@ -226,6 +226,21 @@ class SST2Processor(DataProcessor):
       regression_label = labels['sentiment']
       examples.append(
         InputExample(guid=guid, text_a=text, label=binary_label))
+    return examples
+
+
+  def _create_examples(self, lines, set_type):
+    """Creates examples for the training and dev sets."""
+    examples = []
+    for (i, line) in enumerate(lines):
+      if i == 0:
+        continue
+      text_a = line[0]
+      binary_label = str(int(line[1]))
+      regression_label = float(line[2])
+      guid = "%s-%s" % (set_type, i)
+      examples.append(
+          InputExample(guid=guid, text_a=text_a, text_b=None, label=binary_label))
     return examples
 
 

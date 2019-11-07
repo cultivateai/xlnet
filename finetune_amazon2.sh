@@ -2,7 +2,7 @@
 export GS_ROOT='gs://sentiment-datasets'
 export LARGE_DIR='xlnet_cased_L-24_H-1024_A-16'
 export AMAZON_DIR='/home/andyhorng/xlnet/amazon_dataset/amazon_review_polarity_csv'
-export TPU_NAME='sentiment'
+export TPU_NAME='sentiment2'
 python run_classifier.py \
   --use_tpu=True \
   --tpu=${TPU_NAME} \
@@ -22,7 +22,7 @@ python run_classifier.py \
   --eval_batch_size=8 \
   --num_hosts=1 \
   --num_core_per_host=8 \
-  --learning_rate=2e-5 \
+  --learning_rate=1e-5 \
   --train_steps=8000 \
   --warmup_steps=500 \
   --save_steps=500 \
@@ -32,16 +32,17 @@ python run_classifier.py \
 # Performance: Error rate 32.26 (amazon5), 2.40 (amazon2)
 
 
-# ctpu up --tf-version 1.14.1.dev20190518 --zone=us-central1-b --name=sentiment --tpu-size v3-8
+# ctpu up --zone=us-central1-b --name=sentiment --tpu-size v3-8 --machine-type n1-standard-8
 # git clone https://github.com/cultivateai/xlnet.git
 # gsutil -m cp -r gs://sentiment-datasets/yelp_dataset ./
 # gsutil -m cp -r gs://sentiment-datasets/amazon_dataset ./
 # gsutil -m cp -r gs://sentiment-datasets/aclImdb ./
 # gsutil -m cp -r gs://sentiment-datasets/xlnet_cased_L-24_H-1024_A-16 ./
+# sudo pip install pandas sentencepiece tensorflow==1.14.0
 
 
 # to view tensorboard (run in cloud shell)
 export STORAGE_BUCKET=gs://sentiment-datasets
 export MODEL_DIR=${STORAGE_BUCKET}/exp/amazon2
-export TPU_IP=10.240.1.2
+export TPU_IP=10.240.1.10
 tensorboard --logdir=${MODEL_DIR} --master_tpu_unsecure_channel=${TPU_IP} &

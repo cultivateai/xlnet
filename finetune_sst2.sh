@@ -37,6 +37,7 @@ python run_classifier.py \
 # gsutil -m cp -r gs://sentiment-datasets/SST-2 ./
 # gsutil -m cp -r gs://sentiment-datasets/xlnet_cased_L-24_H-1024_A-16 ./
 # sudo pip install sentencepiece pandas
+# sudo pip install tensorflow==1.14.0
 
 
 # to view tensorboard (run in cloud shell)
