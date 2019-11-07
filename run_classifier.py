@@ -235,9 +235,12 @@ class SST2Processor(DataProcessor):
     for (i, line) in enumerate(lines):
       if i == 0:
         continue
-      text_a = line[0]
-      binary_label = str(int(line[1]))
-      regression_label = float(line[2])
+      try:
+        text_a = line[0]
+        binary_label = str(int(line[1]))
+        regression_label = float(line[2])
+      except:
+        print(line)
       guid = "%s-%s" % (set_type, i)
       examples.append(
           InputExample(guid=guid, text_a=text_a, text_b=None, label=binary_label))
