@@ -18,7 +18,6 @@ from collections import defaultdict as dd
 
 import absl.logging as _logging  # pylint: disable=unused-import
 import tensorflow as tf
-import pandas as pd
 import sentencepiece as spm
 
 from data_utils import SEP_ID, VOCAB_SIZE, CLS_ID
@@ -309,6 +308,57 @@ class GLUEProcessor(DataProcessor):
         label = line[self.label_column]
       examples.append(
           InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
+    return examples
+
+class Amazon2Processor(DataProcessor):
+  def get_train_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "train.csv"))
+
+  def get_dev_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "test.csv"))
+
+  def get_labels(self):
+    """See base class."""
+    return ["1", "2"]
+
+  def _create_examples(self, input_file):
+    """Creates examples for the training and dev sets."""
+    examples = []
+    with tf.gfile.Open(input_file) as f:
+      reader = csv.reader(f)
+      for i, line in enumerate(reader):
+        label = line[0]
+        title = line[1].replace('""', '"').replace('\\"', '"')
+        body = line[2].replace('""', '"').replace('\\"', '"')
+        text = '%s %s'.format(title, body)
+        examples.append(
+          InputExample(guid=str(i), text_a=text, text_b=None, label=label))
+    return examples
+
+
+class Amazon5Processor(DataProcessor):
+  def get_train_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "train.csv"))
+
+  def get_dev_examples(self, data_dir):
+    return self._create_examples(os.path.join(data_dir, "test.csv"))
+
+  def get_labels(self):
+    """See base class."""
+    return ["1", "2", "3", "4", "5"]
+
+  def _create_examples(self, input_file):
+    """Creates examples for the training and dev sets."""
+    examples = []
+    with tf.gfile.Open(input_file) as f:
+      reader = csv.reader(f)
+      for i, line in enumerate(reader):
+        label = line[0]
+        title = line[1].replace('""', '"').replace('\\"', '"')
+        body = line[2].replace('""', '"').replace('\\"', '"')
+        text = '%s %s'.format(title, body)
+        examples.append(
+          InputExample(guid=str(i), text_a=text, text_b=None, label=label))
     return examples
 
 
@@ -718,8 +768,8 @@ def main(_):
       'imdb': ImdbProcessor,
       "yelp5": Yelp5Processor,
       "yelp2": Yelp2Processor,
-      "amazon5": Yelp5Processor,
-      "amazon2": Yelp2Processor,
+      "amazon5": Amazon5Processor,
+      "amazon2": Amazon2Processor,
       "sst2": SST2Processor
   }
 

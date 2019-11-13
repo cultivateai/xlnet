@@ -17,27 +17,30 @@ python run_classifier.py \
   --spiece_model_file=${LARGE_DIR}/spiece.model \
   --model_config_path=${GS_ROOT}/${LARGE_DIR}/xlnet_config.json \
   --init_checkpoint=${GS_ROOT}/${LARGE_DIR}/xlnet_model.ckpt \
-  --max_seq_length=512 \
-  --train_batch_size=32 \
-  --eval_batch_size=8 \
+  --max_seq_length=256 \
+  --train_batch_size=64 \
+  --eval_batch_size=16 \
   --num_hosts=1 \
   --num_core_per_host=8 \
   --learning_rate=2e-5 \
-  --train_steps=8000 \
+  --train_steps=16000 \
   --warmup_steps=500 \
   --save_steps=500 \
   --iterations=500
 
-
+# ${GS_ROOT}/${LARGE_DIR}/xlnet_model.ckpt
+# ${GS_ROOT}/exp/sst2/checkpoint_11_07_2019/model.ckpt-5300
+# ${GS_ROOT}/exp/sst2/checkpoint_11_08_2019/model.ckpt-500
 # Performance: Accuracy 95.6
 
 
-# ctpu up --tf-version 1.15 --zone=us-central1-b --name=sentiment3 --tpu-size v3-8
+# ctpu up --zone=us-central1-b --name=sentiment2 --tpu-size v3-8
 # git clone https://github.com/cultivateai/xlnet.git
 # gsutil -m cp -r gs://sentiment-datasets/SST-2 ./
 # gsutil -m cp -r gs://sentiment-datasets/xlnet_cased_L-24_H-1024_A-16 ./
 # sudo pip install sentencepiece pandas
 # sudo pip install tensorflow==1.14.0
+# change machine type if needed
 
 
 # to view tensorboard (run in cloud shell)
