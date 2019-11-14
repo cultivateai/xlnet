@@ -325,7 +325,7 @@ class Amazon2Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+      reader = csv.reader(f, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
         label = line[0]
         title = line[1].replace('""', '"').replace('\\"', '"')
@@ -351,7 +351,7 @@ class Amazon5Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+      reader = csv.reader(f, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
         label = line[0]
         title = line[1].replace('""', '"').replace('\\"', '"')
