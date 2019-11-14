@@ -325,12 +325,12 @@ class Amazon2Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(f)
+      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
         label = line[0]
         title = line[1].replace('""', '"').replace('\\"', '"')
         body = line[2].replace('""', '"').replace('\\"', '"')
-        text = '%s %s'.format(title, body)
+        text = '{}\n{}'.format(title, body)
         examples.append(
           InputExample(guid=str(i), text_a=text, text_b=None, label=label))
     return examples
@@ -351,12 +351,12 @@ class Amazon5Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(f)
+      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
         label = line[0]
         title = line[1].replace('""', '"').replace('\\"', '"')
         body = line[2].replace('""', '"').replace('\\"', '"')
-        text = '%s %s'.format(title, body)
+        text = '{}\n{}'.format(title, body)
         examples.append(
           InputExample(guid=str(i), text_a=text, text_b=None, label=label))
     return examples
@@ -377,7 +377,7 @@ class Yelp2Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(f)
+      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
         label = line[0]
         text_a = line[1].replace('""', '"').replace('\\"', '"')
@@ -401,7 +401,7 @@ class Yelp5Processor(DataProcessor):
     """Creates examples for the training and dev sets."""
     examples = []
     with tf.gfile.Open(input_file) as f:
-      reader = csv.reader(f)
+      reader = csv.reader(csvfile, delimiter=',', quotechar='"')
       for i, line in enumerate(reader):
 
         label = line[0]
